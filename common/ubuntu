@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes \
+        bash-completion \
+        curl \
+        locales \
+        man-db \
+        nano \
+        rsync \
+        sudo \
+        unzip \
+        wget \
+        x11-apps \
+        x11-utils \
+    && apt-get install --yes --no-install-recommends \
+        pipewire-bin \
+    && locale-gen en_GB.UTF-8 \
+    && yes | unminimize \
+    && echo "ALL ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nopasswd-sudo \
+    && echo '[[ ! "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]] && export PATH="$HOME/.local/bin:$HOME/bin:$PATH"' > /etc/profile.d/99-path-local-bin.sh \
+    && apt-get install --yes \
+        cloc \
+        git \
+        git-lfs \
+        reuse \
+        shellcheck

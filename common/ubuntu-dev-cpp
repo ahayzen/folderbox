@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes \
+        ccache \
+        clang-format \
+        cmake \
+        gdb \
+        g++ \
+        ninja-build \
+        pkg-config \
+    && echo 'export CMAKE_GENERATOR="Ninja"' > /etc/profile.d/01-cmake-ninja.sh

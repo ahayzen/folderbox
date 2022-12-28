@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+FROM ubuntu:22.04
+
+#include "../../common/ubuntu"
+
+#include "../../common/ubuntu-dev-cpp"
+
+#include "../../common/ubuntu-dev-analyse"
+
+CMD ["/bin/bash", "--login"]
