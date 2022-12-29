@@ -12,6 +12,7 @@ Developer containers which can be executed against a project folder, allowing th
   * Automatic integration with GPU, sound, SSH, windowing etc
   * Work on any system with `pipewire`, `podman`, `ssh`, `wayland`, `x11` installed
   * Allow for development on immutable systems, such as Fedora Silverblue, and executing from inside [`distrobox`](https://github.com/89luca89/distrobox/)
+  * Provide a container environment for IDEs (such as VSCode) to attach to
 
 # Usage
 
