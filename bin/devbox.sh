@@ -188,19 +188,18 @@ printf "\r\033[0K"
 # Prepare permissions and run args
 #
 
-# Use same ids inside the container as outside
-# Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
-USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/sh" --env=USER --userns=keep-id)
-
 ALSA_PERMISSIONS=(--device=/dev/snd:/dev/snd)
 GDB_PERMISSIONS=(--cap-add=SYS_PTRACE --security-opt=seccomp=unconfined)
 GIT_PERMISSIONS=(--volume="$HOME/.config/git":"$HOME/.config/git":rw)
 KVM_PERMISSIONS=(--device=/dev/kvm:/dev/kvm)
+PIPEWIRE_PERMISSIONS=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":"${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":rw)
+PULSEAUDIO_PERMISSIONS=(--env=PULSE_SERVER="unix:${PULSEAUDIO_SOCKET}" --volume="${PULSEAUDIO_SOCKET}":"${PULSEAUDIO_SOCKET}" --env=PULSE_CLIENTCONFIG="${XDG_RUNTIME_DIR}/pulseaudio.client.config" --volume="${PULSEAUDIO_CONFIG}":"${XDG_RUNTIME_DIR}/pulseaudio.client.config")
 SELINUX_PERMISSIONS=(--security-opt=label=type:container_runtime_t)
 SSH_PERMISSIONS=(--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH" --volume="$(dirname "$SSH_AUTH_SOCK_PATH")":"$(dirname "$SSH_AUTH_SOCK_PATH")":rw --volume="$HOME/.ssh":"$HOME/.ssh":rw)
 USB_PERMISSIONS=(--device=/dev/bus/usb:/dev/bus/usb)
-PULSEAUDIO_PERMISSIONS=(--env=PULSE_SERVER="unix:${PULSEAUDIO_SOCKET}" --volume="${PULSEAUDIO_SOCKET}":"${PULSEAUDIO_SOCKET}" --env=PULSE_CLIENTCONFIG="${XDG_RUNTIME_DIR}/pulseaudio.client.config" --volume="${PULSEAUDIO_CONFIG}":"${XDG_RUNTIME_DIR}/pulseaudio.client.config")
-PIPEWIRE_PERMISSIONS=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":"${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":rw)
+# Use same ids inside the container as outside
+# Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
+USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/sh" --env=USER --userns=keep-id)
 WAYLAND_PERMISSIONS=(--env=WAYLAND_DISPLAY --volume="$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":"$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":rw)
 XDG_PERMISSIONS=(--env=HOME --volume="$PERSIST_FOLDER/home":"$HOME":rw --env=XDG_RUNTIME_DIR --volume="$PERSIST_FOLDER/run":"$XDG_RUNTIME_DIR":rw)
 X11_PERMISSIONS=(--device=/dev/dri:/dev/dri --env=DISPLAY --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw --env=XAUTHORITY="$XAUTHORITY_PATH" --volume="$XAUTHORITY_PATH":"$XAUTHORITY_PATH":rw)
@@ -220,21 +219,20 @@ fi
 $PODMAN_EXEC run \
   --rm \
   --interactive --tty \
-  "${CONTAINER_NAME[@]}" \
-  "${USER_PERMISSIONS[@]}" \
   "${ALSA_PERMISSIONS[@]}" \
   "${GDB_PERMISSIONS[@]}" \
   "${GIT_PERMISSIONS[@]}" \
-  "${SSH_PERMISSIONS[@]}" \
   "${KVM_PERMISSIONS[@]}" \
-  "${USB_PERMISSIONS[@]}" \
-  "${SELINUX_PERMISSIONS[@]}" \
-  "${SSH_PERMISSIONS[@]}" \
-  "${XDG_PERMISSIONS[@]}" \
   "${PIPEWIRE_PERMISSIONS[@]}" \
   "${PULSEAUDIO_PERMISSIONS[@]}" \
-  "${X11_PERMISSIONS[@]}" \
+  "${SELINUX_PERMISSIONS[@]}" \
+  "${SSH_PERMISSIONS[@]}" \
+  "${USB_PERMISSIONS[@]}" \
+  "${USER_PERMISSIONS[@]}" \
   "${WAYLAND_PERMISSIONS[@]}" \
+  "${XDG_PERMISSIONS[@]}" \
+  "${X11_PERMISSIONS[@]}" \
+  "${CONTAINER_NAME[@]}" \
   "${TARGET_FOLDER_MOUNT[@]}" \
   "${CUSTOM_RUN_ARGS[@]}" \
   "$TAG_NAME"
