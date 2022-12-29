@@ -192,6 +192,7 @@ mkdir -p "$HOME/.ssh"
 # Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
 USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/sh" --env=USER --userns=keep-id)
 
+ALSA_PERMISSIONS=(--device=/dev/snd:/dev/snd)
 GDB_PERMISSIONS=(--cap-add=SYS_PTRACE --security-opt=seccomp=unconfined)
 GIT_PERMISSIONS=(--volume="$HOME/.config/git":"$HOME/.config/git":rw)
 KVM_PERMISSIONS=(--device=/dev/kvm:/dev/kvm)
@@ -221,6 +222,7 @@ $PODMAN_EXEC run \
   --interactive --tty \
   "${CONTAINER_NAME[@]}" \
   "${USER_PERMISSIONS[@]}" \
+  "${ALSA_PERMISSIONS[@]}" \
   "${GDB_PERMISSIONS[@]}" \
   "${GIT_PERMISSIONS[@]}" \
   "${SSH_PERMISSIONS[@]}" \
