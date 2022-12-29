@@ -19,4 +19,4 @@ fi
 
 # Install data
 mkdir -p "$DATA_FOLDER"
-cp -R "$SCRIPTPATH/data/" "$DATA_FOLDER/"
+cp -R "$SCRIPTPATH/data/." "$DATA_FOLDER"
