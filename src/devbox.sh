@@ -91,6 +91,29 @@ else
     exit 1
 fi
 
+printf "\r(%s) Finding groups ... " "$TAG_NAME"
+if [ -n "$container" ]; then
+    if [ "$container" == "podman" ]; then
+        if [ -x "$(command -v distrobox-host-exec)" ]; then
+            # Ensure host-exec is installed
+            distrobox-host-exec --yes whoami &>/dev/null
+
+            GROUP_ITEMS="$(distrobox-host-exec --yes groups)"
+        else
+            echo "Could not find route to groups on the host from inside container"
+            exit 1
+        fi
+    else
+        echo "Unknown container variable set"
+        exit 1
+    fi
+elif [ -x "$(command -v groups)" ]; then
+    GROUP_ITEMS="$(groups)"
+else
+    echo "Could not find groups on the host"
+    exit 1
+fi
+
 printf "\r(%s) Finding SSH ... " "$TAG_NAME"
 if [ -z "${SSH_AUTH_SOCK}" ]; then
     echo "No SSH_AUTH_SOCK set"
@@ -193,6 +216,14 @@ printf "\r\033[0K"
 ALSA_PERMISSIONS=(--device=/dev/snd:/dev/snd)
 GDB_PERMISSIONS=(--cap-add=SYS_PTRACE --security-opt=seccomp=unconfined)
 GIT_PERMISSIONS=(--volume="$HOME/.config/git":"$HOME/.config/git":rw)
+# Passthrough certain groups from the host into the container that might be useful
+GROUP_PERMISSIONS=()
+for item in $GROUP_ITEMS
+do
+    if [ "$item" == "dialout" ] || [ "$item" == "kvm" ] || [ "$item" == "video" ]; then
+        GROUP_PERMISSIONS+=("--group-add=$item")
+    fi
+done
 KVM_PERMISSIONS=(--device=/dev/kvm:/dev/kvm)
 PIPEWIRE_PERMISSIONS=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":"${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":rw)
 PULSEAUDIO_PERMISSIONS=(--env=PULSE_SERVER="unix:${PULSEAUDIO_CLIENT_SOCKET}" --volume="${PULSEAUDIO_HOST_SOCKET}":"${PULSEAUDIO_CLIENT_SOCKET}":rw --env=PULSE_CLIENTCONFIG="${PULSEAUDIO_CLIENT_CONFIG}" --volume="${PULSEAUDIO_HOST_CONFIG}":"${PULSEAUDIO_CLIENT_CONFIG}":ro)
@@ -227,6 +258,7 @@ CONTAINER_ID=$($PODMAN_EXEC create \
     "${ALSA_PERMISSIONS[@]}" \
     "${GDB_PERMISSIONS[@]}" \
     "${GIT_PERMISSIONS[@]}" \
+    "${GROUP_PERMISSIONS[@]}" \
     "${KVM_PERMISSIONS[@]}" \
     "${PIPEWIRE_PERMISSIONS[@]}" \
     "${PULSEAUDIO_PERMISSIONS[@]}" \
