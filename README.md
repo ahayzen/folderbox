@@ -9,8 +9,8 @@ Developer containers which can be executed against a project folder, allowing th
 # Aims
 
   * Provide an isolated per project or topic developer environment from the host
-  * Automatic integration with GPU, sound, SSH, windowing etc
-  * Work on any system with `pipewire`, `podman`, `ssh`, `wayland`, `x11` installed
+  * Automatic integration with audio, permissions, sound, SSH, windowing etc
+  * Works on any system with `pipewire`, `podman`, `ssh`, `wayland`, `x11` installed
   * Allow for development on immutable systems, such as Fedora Silverblue, and executing from inside [`distrobox`](https://github.com/89luca89/distrobox/)
   * Provide a container environment for IDEs (such as VSCode) to attach to
 
@@ -75,11 +75,13 @@ These would then be used with either `devbox /path/to/my-project` or `devbox dev
 
 # Persistence
 
-The `$HOME` folder in the container is stored for each devbox in `~/.local/share/com.ahayzen.dev/persist/<boxname>`, this allows for user installs, repositories, configuration, and bash history to
-be preserved between sessions.
+The `$HOME` folder in the container is stored for each devbox in `~/.local/share/com.ahayzen.dev/persist/<boxname>`,
+this allows for user installs, repositories, configuration, and bash history to be preserved between sessions.
 
 Note that the container itself is removed once it is stopped, so if packages or changes to the root
-of the container we made, these should be written into the `Containerfile` and the devbox rebuilt.
+of the container were made, these should be written into the `Containerfile` and the devbox rebuilt.
+
+If root folders do need to be persistent then mount them as volumes using the `runargs` file.
 
 # Other projects
 
@@ -90,7 +92,7 @@ an application from the host with opt-in escapes.
 
 | Project | Declarative | Isolation | Sandbox Control |
 |---------|-------------|-----------|---------|
-| devbox | Yes | Medium | No |
+| devbox | Yes | Partial | No |
 | distrobox | No | Weak | Minimal |
 | x11docker | Yes | Strong | Yes |
 
