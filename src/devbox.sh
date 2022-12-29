@@ -14,7 +14,13 @@ function find_exec_on_host()
                 # Ensure host-exec is installed
                 distrobox-host-exec --yes whoami &>/dev/null
 
-                RET="$(command -v distrobox-host-exec) --yes $1"
+                # Check if command -v is able to find the exec on the host
+                if [ -n "$(distrobox-host-exec --yes command -v "$1")" ]; then
+                    RET="distrobox-host-exec --yes $1"
+                else
+                    echo "Could not find $1 on the host from inside container"
+                    exit 1
+                fi
             else
                 echo "Could not find route to $1 on the host from inside container"
                 exit 1
@@ -24,7 +30,7 @@ function find_exec_on_host()
             exit 1
         fi
     elif [ -x "$(command -v "$1")" ]; then
-        RET="$(command -v "$1")"
+        RET="$1"
     else
         echo "Could not find $1 on the host"
         exit 1
