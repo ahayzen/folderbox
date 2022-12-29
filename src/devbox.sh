@@ -196,7 +196,8 @@ PIPEWIRE_PERMISSIONS=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG
 PULSEAUDIO_PERMISSIONS=(--env=PULSE_SERVER="unix:${PULSEAUDIO_SOCKET}" --volume="${PULSEAUDIO_SOCKET}":"${PULSEAUDIO_SOCKET}" --env=PULSE_CLIENTCONFIG="${XDG_RUNTIME_DIR}/pulseaudio.client.config" --volume="${PULSEAUDIO_CONFIG}":"${XDG_RUNTIME_DIR}/pulseaudio.client.config")
 SELINUX_PERMISSIONS=(--security-opt=label=type:container_runtime_t)
 SSH_PERMISSIONS=(--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH" --volume="$(dirname "$SSH_AUTH_SOCK_PATH")":"$(dirname "$SSH_AUTH_SOCK_PATH")":rw --volume="$HOME/.ssh":"$HOME/.ssh":rw)
-USB_PERMISSIONS=(--device=/dev/bus/usb:/dev/bus/usb)
+# Need to use volume mount otherwise devices don't work with adb
+USB_PERMISSIONS=(--volume=/dev/bus/usb:/dev/bus/usb)
 # Use same ids inside the container as outside
 # Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
 USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/sh" --env=USER --userns=keep-id)
