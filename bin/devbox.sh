@@ -56,6 +56,15 @@ fi
 PERSIST_FOLDER="$DATA_FOLDER/persist/$BOX_NAME"
 TAG_NAME="$NAME-$BOX_NAME"
 
+# Ensure all volume mounts exists
+mkdir -p "$PERSIST_FOLDER/home/"
+mkdir -p "$PERSIST_FOLDER/home/.config/"
+touch "$PERSIST_FOLDER/home/.bashrc"
+mkdir -p "$PERSIST_FOLDER/run/"
+
+mkdir -p "$HOME/.config/git"
+mkdir -p "$HOME/.ssh"
+
 #
 # Find execs and env vars we assume exist
 #
@@ -178,15 +187,6 @@ printf "\r\033[0K"
 #
 # Prepare permissions and run args
 #
-
-# Ensure all volume mounts exists
-mkdir -p "$PERSIST_FOLDER/home/"
-mkdir -p "$PERSIST_FOLDER/home/.config/"
-touch "$PERSIST_FOLDER/home/.bashrc"
-mkdir -p "$PERSIST_FOLDER/run/"
-
-mkdir -p "$HOME/.config/git"
-mkdir -p "$HOME/.ssh"
 
 # Use same ids inside the container as outside
 # Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
