@@ -31,9 +31,9 @@ if [ -d "$1/.devbox" ]; then
         exit 1
     fi
 
-    BOX_NAME="$(basename $(realpath $1))"
-    CONTAINER_FOLDER="$(realpath $1/.devbox)"
-    WORK_FOLDER="$(realpath $1)"
+    BOX_NAME="$(basename "$(realpath "$1")")"
+    CONTAINER_FOLDER="$(realpath "$1/.devbox")"
+    WORK_FOLDER="$(realpath "$1")"
 elif [ -d "$DATA_FOLDER/containers/$1" ]; then
     if [ -z "$2" ]; then
         echo "Expected folder after container name"
@@ -42,7 +42,7 @@ elif [ -d "$DATA_FOLDER/containers/$1" ]; then
 
     BOX_NAME="$1"
     CONTAINER_FOLDER="$DATA_FOLDER/containers/$1"
-    WORK_FOLDER="$(realpath $2)"
+    WORK_FOLDER="$(realpath "$2")"
 else
     echo "Could not find devbox for '$1'"
     exit 1
