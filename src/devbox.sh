@@ -216,24 +216,36 @@ fi
 
 #
 # Run a container
-#
-$PODMAN_EXEC run \
-  --rm \
-  --interactive --tty \
-  "${ALSA_PERMISSIONS[@]}" \
-  "${GDB_PERMISSIONS[@]}" \
-  "${GIT_PERMISSIONS[@]}" \
-  "${KVM_PERMISSIONS[@]}" \
-  "${PIPEWIRE_PERMISSIONS[@]}" \
-  "${PULSEAUDIO_PERMISSIONS[@]}" \
-  "${SELINUX_PERMISSIONS[@]}" \
-  "${SSH_PERMISSIONS[@]}" \
-  "${USB_PERMISSIONS[@]}" \
-  "${USER_PERMISSIONS[@]}" \
-  "${WAYLAND_PERMISSIONS[@]}" \
-  "${XDG_PERMISSIONS[@]}" \
-  "${X11_PERMISSIONS[@]}" \
-  "${CONTAINER_NAME[@]}" \
-  "${TARGET_FOLDER_MOUNT[@]}" \
-  "${CUSTOM_RUN_ARGS[@]}" \
-  "$TAG_NAME"
+
+# Create the container with the args
+printf "(%s) Creating ... " "$TAG_NAME"
+CONTAINER_ID=$($PODMAN_EXEC create \
+    --rm \
+    --interactive --tty \
+    "${ALSA_PERMISSIONS[@]}" \
+    "${GDB_PERMISSIONS[@]}" \
+    "${GIT_PERMISSIONS[@]}" \
+    "${KVM_PERMISSIONS[@]}" \
+    "${PIPEWIRE_PERMISSIONS[@]}" \
+    "${PULSEAUDIO_PERMISSIONS[@]}" \
+    "${SELINUX_PERMISSIONS[@]}" \
+    "${SSH_PERMISSIONS[@]}" \
+    "${USB_PERMISSIONS[@]}" \
+    "${USER_PERMISSIONS[@]}" \
+    "${WAYLAND_PERMISSIONS[@]}" \
+    "${XDG_PERMISSIONS[@]}" \
+    "${X11_PERMISSIONS[@]}" \
+    "${CONTAINER_NAME[@]}" \
+    "${TARGET_FOLDER_MOUNT[@]}" \
+    "${CUSTOM_RUN_ARGS[@]}" \
+    "$TAG_NAME"
+)
+printf "\r\033[0K"
+
+# Start the container, this could take a while the first time with userns=keep-id
+printf "(%s) Starting ... " "$TAG_NAME"
+CONTAINER_ID=$($PODMAN_EXEC start "$CONTAINER_ID")
+printf "\r\033[0K"
+
+# Attach to the container
+$PODMAN_EXEC attach "$CONTAINER_ID"
