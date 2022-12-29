@@ -19,7 +19,7 @@ devbox boxname ~/path/to/project
 
 # Installation
 
-Run the `install.sh` for an automated install, this creates the common and containers folders and symlinks the `devbox` script.
+Run the `install.sh` for an automated install, this creates the common and containers folders in `~/.local/share/com.ahayzen.devbox` and symlinks the `devbox` script into `~/.local/bin`.
 
 # Format
 
