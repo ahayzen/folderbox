@@ -130,6 +130,19 @@ if [ ! -S "${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}" ]; then
     exit 1
 fi
 
+printf "\r(%s) Finding Pulseaudio ... " "$TAG_NAME"
+
+# Find the socket
+PULSEAUDIO_SOCKET="${XDG_RUNTIME_DIR}/pulse/native"
+if [ ! -S "${PULSEAUDIO_SOCKET}" ]; then
+    echo "No ${PULSEAUDIO_SOCKET} socket"
+    exit 1
+fi
+
+# Setup config for the guest
+PULSEAUDIO_CONFIG="$PERSIST_FOLDER/pulseaudio.client.config"
+echo "enable-shm = false" > "$PULSEAUDIO_CONFIG"
+
 printf "\r\033[0K"
 
 #
@@ -185,6 +198,7 @@ KVM_PERMISSIONS=(--device=/dev/kvm:/dev/kvm)
 SELINUX_PERMISSIONS=(--security-opt=label=type:container_runtime_t)
 SSH_PERMISSIONS=(--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH" --volume="$(dirname "$SSH_AUTH_SOCK_PATH")":"$(dirname "$SSH_AUTH_SOCK_PATH")":rw --volume="$HOME/.ssh":"$HOME/.ssh":rw)
 USB_PERMISSIONS=(--device=/dev/bus/usb:/dev/bus/usb)
+PULSEAUDIO_PERMISSIONS=(--env=PULSE_SERVER="unix:${PULSEAUDIO_SOCKET}" --volume="${PULSEAUDIO_SOCKET}":"${PULSEAUDIO_SOCKET}" --env=PULSE_CLIENTCONFIG="${XDG_RUNTIME_DIR}/pulseaudio.client.config" --volume="${PULSEAUDIO_CONFIG}":"${XDG_RUNTIME_DIR}/pulseaudio.client.config")
 PIPEWIRE_PERMISSIONS=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":"${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":rw)
 WAYLAND_PERMISSIONS=(--env=WAYLAND_DISPLAY --volume="$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":"$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":rw)
 XDG_PERMISSIONS=(--env=HOME --volume="$PERSIST_FOLDER/home":"$HOME":rw --env=XDG_RUNTIME_DIR --volume="$PERSIST_FOLDER/run":"$XDG_RUNTIME_DIR":rw)
@@ -216,6 +230,7 @@ $PODMAN_EXEC run \
   "${SSH_PERMISSIONS[@]}" \
   "${XDG_PERMISSIONS[@]}" \
   "${PIPEWIRE_PERMISSIONS[@]}" \
+  "${PULSEAUDIO_PERMISSIONS[@]}" \
   "${X11_PERMISSIONS[@]}" \
   "${WAYLAND_PERMISSIONS[@]}" \
   "${TARGET_FOLDER_MOUNT[@]}" \
