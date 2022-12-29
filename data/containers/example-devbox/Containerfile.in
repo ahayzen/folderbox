@@ -8,6 +8,4 @@ FROM ubuntu:22.04
 
 #include "../../common/ubuntu-dev-cpp"
 
-#include "../../common/ubuntu-dev-analyse"
-
 CMD ["/bin/bash", "--login"]
