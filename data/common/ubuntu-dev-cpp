@@ -13,4 +13,4 @@ RUN apt-get update \
         g++ \
         ninja-build \
         pkg-config \
-    && echo 'export CMAKE_GENERATOR="Ninja"' > /etc/profile.d/01-cmake-ninja.sh
+    && echo 'export CMAKE_GENERATOR="Ninja"' > /etc/profile.d/99-cmake-ninja.sh
