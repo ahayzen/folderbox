@@ -6,6 +6,31 @@
 
 set -e
 
+function find_exec_on_host()
+{
+    if [ -n "$container" ]; then
+        if [ "$container" == "podman" ]; then
+            if [ -x "$(command -v distrobox-host-exec)" ]; then
+                # Ensure host-exec is installed
+                distrobox-host-exec --yes whoami &>/dev/null
+
+                RET="$(command -v distrobox-host-exec) --yes $1"
+            else
+                echo "Could not find route to $1 on the host from inside container"
+                exit 1
+            fi
+        else
+            echo "Unknown container variable set"
+            exit 1
+        fi
+    elif [ -x "$(command -v "$1")" ]; then
+        RET="$(command -v "$1")"
+    else
+        echo "Could not find $1 on the host"
+        exit 1
+    fi
+}
+
 #
 # Prepare common variables and check state
 #
@@ -69,50 +94,12 @@ mkdir -p "$HOME/.ssh"
 # Find execs and env vars we assume exist
 #
 printf "(%s) Finding Podman ... " "$TAG_NAME"
-if [ -n "$container" ]; then
-    if [ "$container" == "podman" ]; then
-        if [ -x "$(command -v distrobox-host-exec)" ]; then
-            # Ensure host-exec is installed
-            distrobox-host-exec --yes whoami &>/dev/null
-
-            PODMAN_EXEC="$(command -v distrobox-host-exec) --yes podman"
-        else
-            echo "Could not find route to podman on the host from inside container"
-            exit 1
-        fi
-    else
-        echo "Unknown container variable set"
-        exit 1
-    fi
-elif [ -x "$(command -v podman)" ]; then
-    PODMAN_EXEC="$(command -v podman)"
-else
-    echo "Could not find podman on the host"
-    exit 1
-fi
+find_exec_on_host podman
+PODMAN_EXEC="$RET"
 
 printf "\r(%s) Finding groups ... " "$TAG_NAME"
-if [ -n "$container" ]; then
-    if [ "$container" == "podman" ]; then
-        if [ -x "$(command -v distrobox-host-exec)" ]; then
-            # Ensure host-exec is installed
-            distrobox-host-exec --yes whoami &>/dev/null
-
-            GROUP_ITEMS="$(distrobox-host-exec --yes groups)"
-        else
-            echo "Could not find route to groups on the host from inside container"
-            exit 1
-        fi
-    else
-        echo "Unknown container variable set"
-        exit 1
-    fi
-elif [ -x "$(command -v groups)" ]; then
-    GROUP_ITEMS="$(groups)"
-else
-    echo "Could not find groups on the host"
-    exit 1
-fi
+find_exec_on_host groups
+GROUP_ITEMS="$($RET)"
 
 printf "\r(%s) Finding SSH ... " "$TAG_NAME"
 if [ -z "${SSH_AUTH_SOCK}" ]; then
