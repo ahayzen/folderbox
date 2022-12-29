@@ -20,7 +20,7 @@ chmod +x "$SCRIPTPATH/bin/devbox"
 
 # Symlink the binary
 mkdir -p "$HOME/.local/bin"
-if [ ! -L "$HOME/.local/bin/devbox" ] || [ ! -x "$HOME/.local/bin/devbox" ] || [ "$(realpath $HOME/.local/bin/devbox)" != "$SCRIPTPATH/bin/devbox" ]; then
+if [ ! -L "$HOME/.local/bin/devbox" ] || [ ! -x "$HOME/.local/bin/devbox" ] || [ "$(realpath "$HOME/.local/bin/devbox")" != "$SCRIPTPATH/bin/devbox" ]; then
     ln -sf "$SCRIPTPATH/bin/devbox" "$HOME/.local/bin/devbox"
 fi
 
