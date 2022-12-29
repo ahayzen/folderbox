@@ -209,6 +209,7 @@ printf "\r\033[0K"
 ALSA_PERMISSIONS=(--device=/dev/snd:/dev/snd)
 GDB_PERMISSIONS=(--cap-add=SYS_PTRACE --security-opt=seccomp=unconfined)
 GIT_PERMISSIONS=(--volume="$HOME/.config/git":"$HOME/.config/git":rw)
+GPU_PERMISSIONS=(--device=/dev/dri:/dev/dri)
 # Passthrough certain groups from the host into the container that might be useful
 GROUP_PERMISSIONS=()
 for item in $GROUP_ITEMS
@@ -229,7 +230,7 @@ USB_PERMISSIONS=(--volume=/dev/bus/usb:/dev/bus/usb)
 USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/bash" --env=USER --userns=keep-id)
 WAYLAND_PERMISSIONS=(--env=WAYLAND_DISPLAY --volume="$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":"$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":rw)
 XDG_PERMISSIONS=(--env=HOME --volume="$PERSIST_FOLDER/home":"$HOME":rw --env=XDG_RUNTIME_DIR --volume="$PERSIST_FOLDER/run":"$XDG_RUNTIME_DIR":rw)
-X11_PERMISSIONS=(--device=/dev/dri:/dev/dri --env=DISPLAY --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw --env=XAUTHORITY="$XAUTHORITY_PATH" --volume="$XAUTHORITY_PATH":"$XAUTHORITY_PATH":rw)
+X11_PERMISSIONS=(--env=DISPLAY --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw --env=XAUTHORITY="$XAUTHORITY_PATH" --volume="$XAUTHORITY_PATH":"$XAUTHORITY_PATH":rw)
 
 CONTAINER_NAME=(--hostname="$BOX_NAME" --name="$BOX_NAME")
 TARGET_FOLDER_MOUNT=(--volume="$WORK_FOLDER":"$WORK_FOLDER":rw --workdir="$WORK_FOLDER")
@@ -251,6 +252,7 @@ CONTAINER_ID=$($PODMAN_EXEC create \
     "${ALSA_PERMISSIONS[@]}" \
     "${GDB_PERMISSIONS[@]}" \
     "${GIT_PERMISSIONS[@]}" \
+    "${GPU_PERMISSIONS[@]}" \
     "${GROUP_PERMISSIONS[@]}" \
     "${KVM_PERMISSIONS[@]}" \
     "${PIPEWIRE_PERMISSIONS[@]}" \
