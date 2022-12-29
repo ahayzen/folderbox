@@ -219,8 +219,8 @@ fi
 #
 # Run a container
 
-# Create the container with the args
-printf "(%s) Creating ... " "$TAG_NAME"
+# Create the container with the args, this could take a while the first time with userns=keep-id
+printf "(%s) Creating (first time may take a while) ... " "$TAG_NAME"
 CONTAINER_ID=$($PODMAN_EXEC create \
     --rm \
     --interactive --tty \
@@ -244,7 +244,7 @@ CONTAINER_ID=$($PODMAN_EXEC create \
 )
 printf "\r\033[0K"
 
-# Start the container, this could take a while the first time with userns=keep-id
+# Start the container
 printf "(%s) Starting ... " "$TAG_NAME"
 CONTAINER_ID=$($PODMAN_EXEC start "$CONTAINER_ID")
 printf "\r\033[0K"
