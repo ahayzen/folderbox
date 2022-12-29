@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-RUN echo "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && rustup component add clippy rustfmt rust-src && . ~/.cargo/env && cargo install sccache" > /usr/local/bin/install_rust \
+RUN echo "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && rustup component add clippy rustfmt rust-src && . ~/.cargo/env && RUSTC_WRAPPER="" cargo install sccache" > /usr/local/bin/install_rust \
     && chmod +x /usr/local/bin/install_rust \
     && echo '[[ ! "$PATH" =~ "$HOME/.cargo/bin:" ]] && export PATH="$HOME/.cargo/bin:$PATH"' > /etc/profile.d/90-path-cargo.sh \
-    && echo "export RUSTC_WRAPPER=sccache" > /etc/profile.d/90-rustc-wrapper-sccache.sh
+    && echo "export RUSTC_WRAPPER=sccache" > /etc/profile.d/90-rustc-wrapper-sccache.sh \
     && echo 'export CMAKE_C_COMPILER_LAUNCHER="sccache"' > /etc/profile.d/95-cmake-c-sccache.sh \
     && echo 'export CMAKE_CXX_COMPILER_LAUNCHER="sccache"' > /etc/profile.d/95-cmake-cxx-sccache.sh
