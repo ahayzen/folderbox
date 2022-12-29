@@ -202,7 +202,7 @@ SSH_PERMISSIONS=(--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH" --volume="$(dirname "
 USB_PERMISSIONS=(--volume=/dev/bus/usb:/dev/bus/usb)
 # Use same ids inside the container as outside
 # Ensure that the passwd entry has the correct HOME ( https://github.com/containers/podman/issues/13185 )
-USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/sh" --env=USER --userns=keep-id)
+USER_PERMISSIONS=(--passwd-entry="$USER:*:$UID:$UID:$USER:$HOME:/bin/bash" --env=USER --userns=keep-id)
 WAYLAND_PERMISSIONS=(--env=WAYLAND_DISPLAY --volume="$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":"$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":rw)
 XDG_PERMISSIONS=(--env=HOME --volume="$PERSIST_FOLDER/home":"$HOME":rw --env=XDG_RUNTIME_DIR --volume="$PERSIST_FOLDER/run":"$XDG_RUNTIME_DIR":rw)
 X11_PERMISSIONS=(--device=/dev/dri:/dev/dri --env=DISPLAY --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw --env=XAUTHORITY="$XAUTHORITY_PATH" --volume="$XAUTHORITY_PATH":"$XAUTHORITY_PATH":rw)
