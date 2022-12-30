@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: "build and install"
-        run: ./install.sh
+      - name: "build"
+        run: ./build.sh
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
         with:
