@@ -75,7 +75,7 @@ an application from the host with opt-in escapes.
 
 | Project | Declarative | Isolation | Sandbox Control |
 |---------|-------------|-----------|---------|
-| devbox | Yes | Partial | No |
+| devbox | Yes | Partial | Raw run args |
 | distrobox | No | Weak | Minimal |
 | x11docker | Yes | Strong | Yes |
 
