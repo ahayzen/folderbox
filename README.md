@@ -29,24 +29,7 @@ devbox boxname ~/path/to/project
 
 To rebuild or pull a container simply remove the container and run `devbox` again, `podman rmi devbox-boxname`.
 
-# Sandbox escapes
-
-The following devices, servies, sockets, or config are exposed into the container.
-
-  * ALSA
-  * gdb
-  * git
-  * gpu
-  * groups (dialout, kvm, video)
-  * kvm
-  * pipewire
-  * pulseaudio
-  * selinux
-  * ssh
-  * usb
-  * user (id is same)
-  * wayland
-  * x11
+See the [sandbox folder](./src/sandbox/) for supported sandbox escapes.
 
 # Project Format
 
