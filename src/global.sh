@@ -4,7 +4,7 @@
 
 set -e
 
-NAME="devbox"
+NAME="folderbox"
 DATA_FOLDER="$HOME/.local/share/com.ahayzen.$NAME"
 
 CONTAINER_RUN_ARGS=()

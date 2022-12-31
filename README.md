@@ -4,7 +4,8 @@ SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
 SPDX-License-Identifier: MPL-2.0
 -->
 
-Developer containers which can be executed against a project folder, allowing the development environment to be separate from the host, while still allowing integratation with the host.
+Workspaces using containers which can be executed against a project folder.
+Allowing the development environment to be separate from the host, while still providing sandbox escapes.
 
 # Aims
 
@@ -16,70 +17,71 @@ Developer containers which can be executed against a project folder, allowing th
 
 # Usage
 
-Run the `install.sh` for an automated install, this creates the common and containers folders in `~/.local/share/com.ahayzen.devbox` and symlinks the `devbox` script into `~/.local/bin`.
+Run the `install.sh` for an automated install, this creates the common and containers folders in `~/.local/share/com.ahayzen.folderbox` and symlinks the `folderbox` script into `~/.local/bin`.
 
 
 ```bash
-# expects .devbox folder with box definition
-devbox ~/path/to/project
+# expects .folderbox folder with box definition
+folderbox ~/path/to/project
 
-# expects boxname in ~/.local/share/com.ahayzen.devbox/containers
-devbox boxname ~/path/to/project
+# expects boxname in ~/.local/share/com.ahayzen.folderbox/containers
+folderbox boxname ~/path/to/project
 ```
 
-To rebuild or pull a container simply remove the container and run `devbox` again, `podman rmi devbox-boxname`.
+To rebuild or pull a container simply remove the container and run `folderbox` again, `podman rmi folderbox-boxname`.
 
 See the [sandbox folder](./src/sandbox/) for supported sandbox escapes.
 
 # Project Format
 
-A devbox is defined either in the `.devbox` folder of the project or in the shared `~/.local/share/com.ahayzen.devbox/containers` folder.
+A folderbox is defined either in the `.folderbox` folder of the project or in the shared `~/.local/share/com.ahayzen.folderbox/containers` folder.
 
 Inside the folder a `Containerfile.in` or `Containerfile` is expected, this should setup the environment - if it's a `.in` file then note you can use `#include "path/to/common/snippet"`.
-Note that common snippets are installed into `~/.local/share/com.ahayzen.devbox/common`.
+Note that common snippets are installed into `~/.local/share/com.ahayzen.folderbox/common`.
 
 There also can be a `runargs` file, each line of this file are added as arguments to the `podman run` command.
 
 ```
 my-project/
-  .devbox/
+  .folderbox/
     Containerfile.in
     runargs
     ...other_context_items...
   src/
 
-~/.local/share/com.ahayzen.devbox/containers/dev-env/
+~/.local/share/com.ahayzen.folderbox/containers/my-env/
   Containerfile.in
   runargs
   ...other_context_items...
 ```
 
-These would then be used with either `devbox /path/to/my-project` or `devbox dev-env /path/to/project`, note that the `dev-env` can be used with multiple projects.
+These would then be used with either `folderbox /path/to/my-project` or `folderbox my-env /path/to/project`, note that the `my-env` can be used with multiple projects.
 
 # Persistence
 
-The `$HOME` folder in the container is stored for each devbox in `~/.local/share/com.ahayzen.dev/persist/<boxname>`,
+The `$HOME` folder in the container is stored for each folderbox in `~/.local/share/com.ahayzen.folderbox/persist/<boxname>`,
 this allows for user installs, repositories, configuration, and bash history to be preserved between sessions.
 
 Note that the container itself is removed once it is stopped, so if packages or changes to the root
-of the container were made, these should be written into the `Containerfile` and the devbox rebuilt.
+of the container were made, these should be written into the `Containerfile` and the folderbox rebuilt.
 
 If root folders do need to be persistent then mount them as volumes using the `runargs` file.
 
 # Other projects
 
-There are other projects that are similar to devbox but with different goals,
-devbox tries to keeps your projects isolated while integrating with the host.
-Whereas others either try to integrate all of a users HOME or totally isolate
-an application from the host with opt-in escapes.
+There are other projects that are similar to folderbox but with different goals,
+folderbox tries to keep your projects isolated while integrating with the host.
 
-| Project | Declarative | Isolation | Sandbox Control |
-|---------|-------------|-----------|---------|
-| devbox | Yes | Partial | Raw run args |
-| distrobox | No | Weak | Minimal |
-| x11docker | Yes | Strong | Yes |
+| Project | Declarative | Sandbox | Custom Sandbox Control | Packaging System | Default Folder Access |
+|---------|-------------|---------|------------------------|------------------|---|
+| devbox | Yes | None | - | Nix | All |
+| distrobox | No | Weak | Minimal | OCI | Home |
+| folderbox | Yes | Partial | Raw | OCI | Directory |
+| x11docker | Yes | Strong | Yes | OCI | None |
 
-  * [distrobox](https://github.com/89luca89/distrobox/) -  "Use any linux distribution inside your terminal. Enable both backward and forward compatibility with software and freedom to use whatever distribution you’re more comfortable with."
-    * Tries to create a terminal that has access to the whole of $HOME and feels like it is running as the host, whereas devbox is isolated to project folders
+  * [devbox](https://github.com/jetpack-io/devbox) - "Instant, easy, and predictable development environments"
+    * Uses Nix packaging to provide packages but doesn't isolate file access from the host, whereas folderbox is isolated to project folders
+  * [distrobox](https://github.com/89luca89/distrobox/) - "Use any linux distribution inside your terminal. Enable both backward and forward compatibility with software and freedom to use whatever distribution you're more comfortable with."
+    * Tries to create a terminal that has access to the whole of $HOME and feels like it is running as the host, whereas folderbox is isolated to project folders
   * [x11docker](https://github.com/mviereck/x11docker/) - "Run GUI applications and desktops in docker and podman containers. Focus on security."
-    * Tries to isolate applications with opt-in confinement escapes, whereas devbox enables all confinement escapes by default
+    * Tries to isolate applications with opt-in confinement escapes, whereas folderbox enables all confinement escapes by default
