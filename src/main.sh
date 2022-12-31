@@ -4,11 +4,11 @@
 
 function help_echo() {
     echo "Usage:"
-    echo "# expects .devbox folder with box definition"
-    echo "devbox ~/path/to/project"
+    echo "# expects .$NAME folder with box definition"
+    echo "$NAME ~/path/to/project"
     echo ""
     echo "# expects boxname in $DATA_FOLDER/containers"
-    echo "devbox boxname ~/path/to/project"
+    echo "$NAME boxname ~/path/to/project"
     exit 0
 }
 

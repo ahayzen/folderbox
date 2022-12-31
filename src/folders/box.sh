@@ -3,14 +3,14 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function folders_setup_box() {
-    if [ -d "$1/.devbox" ]; then
+    if [ -d "$1/.$NAME" ]; then
         if [ -n "$2" ]; then
             echo "Unexpected argument after folder"
             exit 1
         fi
 
         BOX_NAME="$(basename "$(realpath "$1")")"
-        CONTAINER_FOLDER="$(realpath "$1/.devbox")"
+        CONTAINER_FOLDER="$(realpath "$1/.$NAME")"
         WORK_FOLDER="$(realpath "$1")"
     elif [ -d "$DATA_FOLDER/containers/$1" ]; then
         if [ -z "$2" ]; then
@@ -22,7 +22,7 @@ function folders_setup_box() {
         CONTAINER_FOLDER="$DATA_FOLDER/containers/$1"
         WORK_FOLDER="$(realpath "$2")"
     else
-        echo "Could not find devbox for '$1'"
+        echo "Could not find $NAME for '$1'"
         exit 1
     fi
 

@@ -9,17 +9,17 @@ set -e
 SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-BIN_TARGET="$SCRIPTPATH/bin/devbox"
-NAME="devbox"
-DATA_FOLDER="$HOME/.local/share/com.ahayzen.$NAME"
+# shellcheck source=src/global.sh
+source "$SCRIPTPATH/src/global.sh"
+BIN_TARGET="$SCRIPTPATH/bin/$NAME"
 
 # Build the binary
 "$SCRIPTPATH/build.sh"
 
 # Symlink the binary
 mkdir -p "$HOME/.local/bin"
-if [ ! -L "$HOME/.local/bin/devbox" ] || [ ! -x "$HOME/.local/bin/devbox" ] || [ "$(realpath "$HOME/.local/bin/devbox")" != "$BIN_TARGET" ]; then
-    ln -sf "$BIN_TARGET" "$HOME/.local/bin/devbox"
+if [ ! -L "$HOME/.local/bin/$NAME" ] || [ ! -x "$HOME/.local/bin/$NAME" ] || [ "$(realpath "$HOME/.local/bin/$NAME")" != "$BIN_TARGET" ]; then
+    ln -sf "$BIN_TARGET" "$HOME/.local/bin/$NAME"
 fi
 
 # Install data

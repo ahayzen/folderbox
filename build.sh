@@ -9,7 +9,9 @@ set -e
 SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-BIN_TARGET="$SCRIPTPATH/bin/devbox"
+# shellcheck source=src/global.sh
+source "$SCRIPTPATH/src/global.sh"
+BIN_TARGET="$SCRIPTPATH/bin/$NAME"
 mkdir -p "$SCRIPTPATH/bin"
 
 # Build the binary from multiple sources
