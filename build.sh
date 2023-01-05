@@ -51,7 +51,7 @@ echo "#!/usr/bin/env bash" > "$BIN_TARGET"
 
 for FILE in "${PROJECT_FILES[@]}"; do
     echo "" >> "$BIN_TARGET"
-    cat "${FILE}" >> "$BIN_TARGET"
+    cat "$SCRIPTPATH/${FILE}" >> "$BIN_TARGET"
 done
 
 {
