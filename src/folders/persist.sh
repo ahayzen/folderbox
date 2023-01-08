@@ -3,6 +3,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function folders_setup_persist() {
-    # TODO: serialise the folder name too
-    PERSIST_FOLDER="$DATA_FOLDER/persist/$BOX_NAME"
+    # Build a serialised name for the persist folder
+    # this is a combination of the box name and work folder name
+    local base_name
+    local serialised
+    base_name=$(basename "$WORK_FOLDER")
+    serialised=$(echo "$WORK_FOLDER" | cksum | cut -d' ' -f1)
+
+    PERSIST_FOLDER="$DATA_FOLDER/persist/${BOX_NAME}-${serialised}-${base_name}"
 }
