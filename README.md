@@ -39,7 +39,9 @@ A folderbox is defined either in the `.folderbox` folder of the project or in th
 Inside the folder a `Containerfile.in` or `Containerfile` is expected, this should setup the environment - if it's a `.in` file then note you can use `#include "path/to/common/snippet"`.
 Note that common snippets are installed into `~/.local/share/com.ahayzen.folderbox/common`.
 
-There also can be a `runargs` file, each line of this file are added as arguments to the `podman run` command.
+See [data/containers/example-cpp](./data/containers/example-cpp) as an example of a container and [data/common](./data/containers) for snippets.
+
+There also can be a `runargs` file, each line of this file are added as arguments to the `podman run` command. (eg `runargs` could container `--volume=/custom/path:/custom/path` which would then volume mount `/custom/path`).
 
 ```
 my-project/
