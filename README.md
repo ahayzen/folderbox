@@ -59,7 +59,7 @@ These would then be used with either `folderbox /path/to/my-project` or `folderb
 
 # Persistence
 
-The `$HOME` folder in the container is stored for each folderbox in `~/.local/share/com.ahayzen.folderbox/persist/<boxname>`,
+The `$HOME` folder in the container is stored for each folderbox in `~/.local/share/com.ahayzen.folderbox/persist/<boxname>-<cksum of project>-<basename of project>`,
 this allows for user installs, repositories, configuration, and bash history to be preserved between sessions.
 
 Note that the container itself is removed once it is stopped, so if packages or changes to the root
