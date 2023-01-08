@@ -3,17 +3,23 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function sandbox_setup_pulseaudio() {
-    # Find the socket
-    PULSEAUDIO_HOST_SOCKET="${XDG_RUNTIME_DIR}/pulse/native"
-    PULSEAUDIO_CLIENT_SOCKET="${XDG_RUNTIME_DIR}/pulse/native"
+    # Find pactl
+    utils_find_exec_on_host pactl
+    PACTL_EXEC="$RET"
+
+    # Find the host socket
+    PULSEAUDIO_HOST_SOCKET=$(realpath "$($PACTL_EXEC info | awk -F ": " '$1 == "Server String" { print $2 }')")
     if [ ! -S "${PULSEAUDIO_HOST_SOCKET}" ]; then
-        echo "No ${PULSEAUDIO_HOST_SOCKET} socket"
+        echo "No pulseaudio (${PULSEAUDIO_HOST_SOCKET}) socket"
         exit 1
     fi
 
+    # Set the client env
+    PULSEAUDIO_CLIENT_SOCKET="${XDG_RUNTIME_DIR}/pulse/native"
+    PULSEAUDIO_CLIENT_CONFIG="${XDG_RUNTIME_DIR}/pulse/client.config"
+
     # Setup config for the guest
     PULSEAUDIO_HOST_CONFIG="$PERSIST_FOLDER/pulseaudio.client.config"
-    PULSEAUDIO_CLIENT_CONFIG="${XDG_RUNTIME_DIR}/pulse/client.config"
     echo "enable-shm = false" > "$PULSEAUDIO_HOST_CONFIG"
 
     CONTAINER_RUN_ARGS+=(--env=PULSE_SERVER="unix:${PULSEAUDIO_CLIENT_SOCKET}" --volume="${PULSEAUDIO_HOST_SOCKET}":"${PULSEAUDIO_CLIENT_SOCKET}":rw)
