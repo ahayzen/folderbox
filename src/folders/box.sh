@@ -27,7 +27,7 @@ function folders_setup_box() {
     fi
 
     # Don't allow HOME as the work folder as we use HOME for persistence with custom mounting
-    if [ "$WORK_FOLDER" == "$(realpath $HOME)" ]; then
+    if [ "$WORK_FOLDER" == "$(realpath "$HOME")" ]; then
         echo "Work folder cannot be \$HOME, consider using distrobox instead."
         exit 1
     fi
