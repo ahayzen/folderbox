@@ -69,6 +69,55 @@ of the container were made, these should be written into the `Containerfile` and
 
 If root folders do need to be persistent then mount them as volumes using the `runargs` file.
 
+# VSCode
+
+Visual Studio Code can attach to the folderbox container by using the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+
+  * Install the extension `ms-vscode-remote.remote-containers`
+  * Start the `folderbox` container
+  * `View` -> `Command Palette...`
+  * `> Dev Containers: Attach to Running Container...`
+  * Pick your folderbox container
+
+## Flatpak
+
+With the flatpak of Visual Studio Code this works in a similar way, just the path to `podman` needs to be set so that it can reach the host.
+
+Run the following commands to create a `podman-host` command in your `~/.local/bin`, this is the same as the [distrobox setup](https://github.com/89luca89/distrobox/blob/0e24aae53ae6e2fd6901db3556de9e6b261e7a6f/docs/posts/integrate_vscode_distrobox.md#third-step-podman-wrapper) for Visual Studio Code.
+
+```bash
+mkdir -p ~/.local/bin
+sudo tee ~/.local/bin/podman-host <<EOF
+#!/bin/bash
+set -x
+if [ "\$1" == "exec" ]; then
+ # Remove 'exec' from \$@
+ shift
+ script='
+     result_command="podman exec"
+        for i in \$(printenv | grep "=" | grep -Ev " |\"" |
+            grep -Ev "^(HOST|HOSTNAME|HOME|PATH|SHELL|USER|_)"); do
+
+            result_command=\$result_command --env="\$i"
+     done
+
+        exec \${result_command} "\$@"
+    '
+ exec flatpak-spawn --host sh -c "\$script" - "\$@"
+else
+ exec flatpak-spawn --host podman "\$@"
+fi
+EOF
+
+# ensure this file isn't writable, vscode has corrupted it before
+sudo chmod 0500 ~/.local/bin/podman-host
+sudo chown "$USER:$USER" ~/.local/bin/podman-host
+```
+
+Then in your Visual Studio Code settings set `podman-host` to the path.
+
+`"dev.containers.dockerPath": "${HOME}/.local/bin/podman-host",`
+
 # Other projects
 
 There are other projects that are similar to folderbox but with different goals,
