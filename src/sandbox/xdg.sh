@@ -12,6 +12,9 @@ function sandbox_setup_xdg() {
     mkdir -p "$PERSIST_FOLDER/home/"
     mkdir -p "$PERSIST_FOLDER/run/"
 
+    # Ensure permissions are correct for XDG_RUNTIME_DIR
+    chmod 0700 "$PERSIST_FOLDER/run/"
+
     # Ensure a .bashrc exists in the persistent home
     touch "$PERSIST_FOLDER/home/.bashrc"
 
