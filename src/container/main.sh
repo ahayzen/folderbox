@@ -10,17 +10,30 @@ function container_setup() {
     printf "\r(%s) Building image ... " "$TAG_NAME"
     container_setup_build
 
-    # Create the container with the args, this could take a while the first time with userns=keep-id
-    printf "\r(%s) Creating container (first time may take a while) ... " "$TAG_NAME"
-    container_setup_create
+    # Determine if the container is already running or not
+    if [ "$(container_setup_is_running)" == "running" ]; then
+        # Load container id
+        container_setup_running_load_id
 
-    # Start the container
-    printf "\r(%s) Starting container ... " "$TAG_NAME"
-    container_setup_start
+        # Clear console
+        printf "\r\033[0K"
 
-    # Clear console
-    printf "\r\033[0K"
+        # Attach to existing container
+        printf "\r(%s) Attaching to existing with: /bin/bash --login\n" "$TAG_NAME"
+        container_setup_exec
+    else
+        # Create the container with the args, this could take a while the first time with userns=keep-id
+        printf "\r(%s) Creating container (first time may take a while) ... " "$TAG_NAME"
+        container_setup_create
 
-    # Attach to the container
-    container_setup_attach
+        # Start the container
+        printf "\r(%s) Starting container ... " "$TAG_NAME"
+        container_setup_start
+
+        # Clear console
+        printf "\r\033[0K"
+
+        # Attach to the container
+        container_setup_attach
+    fi
 }

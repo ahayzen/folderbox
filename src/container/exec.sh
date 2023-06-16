@@ -15,6 +15,24 @@ function container_setup_create() {
     )
 }
 
+function container_setup_exec() {
+    $PODMAN_EXEC exec \
+        --interactive --tty \
+        "$CONTAINER_ID" \
+        /bin/bash --login
+}
+
+function container_setup_is_running() {
+    $PODMAN_EXEC container inspect \
+        --format '{{.State.Status}}' \
+        "$TAG_NAME" \
+        2>&1 || true
+}
+
+function container_setup_running_load_id() {
+    CONTAINER_ID=$($PODMAN_EXEC container inspect --format '{{.Id}}' "$TAG_NAME")
+}
+
 function container_setup_start() {
     CONTAINER_ID=$($PODMAN_EXEC start "$CONTAINER_ID")
 }
