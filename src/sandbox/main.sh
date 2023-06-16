@@ -23,6 +23,8 @@ function sandbox_setup() {
     sandbox_setup_selinux
     printf "\r(%s) Finding SSH ... " "$TAG_NAME"
     sandbox_setup_ssh
+    printf "\r(%s) Finding timezone ..." "$TAG_NAME"
+    sandbox_setup_timezone
     printf "\r(%s) Finding USB ... " "$TAG_NAME"
     sandbox_setup_usb
     printf "\r(%s) Finding User ... " "$TAG_NAME"
