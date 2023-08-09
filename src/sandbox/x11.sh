@@ -5,7 +5,7 @@
 function sandbox_setup_x11() {
     if [ -z "${XAUTHORITY}" ]; then
         echo "No XAUTHORITY set"
-        exit 1
+        return
     else
         XAUTHORITY_PATH=$(realpath "$XAUTHORITY")
     fi

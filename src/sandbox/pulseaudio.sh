@@ -8,13 +8,18 @@ function sandbox_setup_pulseaudio() {
     else
         # Find pactl
         utils_find_exec_on_host pactl
-        PACTL_EXEC="$RET"
-        PULSEAUDIO_HOST_SOCKET=$(realpath "$($PACTL_EXEC info | awk -F ": " '$1 == "Server String" { print $2 }')")
+
+        if [ -n "$RET" ]; then
+            PACTL_EXEC="$RET"
+            PULSEAUDIO_HOST_SOCKET=$(realpath "$($PACTL_EXEC info | awk -F ": " '$1 == "Server String" { print $2 }')")
+        else
+            PULSEAUDIO_HOST_SOCKET=""
+        fi
     fi
 
     if [ ! -S "${PULSEAUDIO_HOST_SOCKET}" ]; then
         echo "No pulseaudio (${PULSEAUDIO_HOST_SOCKET}) socket"
-        exit 1
+        return
     fi
 
     # Set the client env

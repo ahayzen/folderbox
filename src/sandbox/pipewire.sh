@@ -9,7 +9,7 @@ function sandbox_setup_pipewire() {
 
     if [ ! -S "${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}" ]; then
         echo "No ${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE} socket"
-        exit 1
+        return
     fi
 
     CONTAINER_RUN_ARGS+=(--env=PIPEWIRE_REMOTE="${PIPEWIRE_REMOTE}" --volume="${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":"${XDG_RUNTIME_DIR}/${PIPEWIRE_REMOTE}":rw)

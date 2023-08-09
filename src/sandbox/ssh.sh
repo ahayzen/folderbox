@@ -5,14 +5,14 @@
 function sandbox_setup_ssh() {
     if [ -z "${SSH_AUTH_SOCK}" ]; then
         echo "No SSH_AUTH_SOCK set"
-        exit 1
+        return
     else
         SSH_AUTH_SOCK_PATH=$(realpath "$SSH_AUTH_SOCK")
     fi
 
     if [ ! -S "${SSH_AUTH_SOCK_PATH}" ]; then
         echo "No ${SSH_AUTH_SOCK_PATH} socket"
-        exit 1
+        return
     fi
 
     # Ensure ssh folder exists on the host

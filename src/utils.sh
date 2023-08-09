@@ -14,20 +14,20 @@ function utils_find_exec_on_host() {
                     RET="distrobox-host-exec --yes $1"
                 else
                     echo "Could not find $1 on the host from inside container"
-                    exit 1
+                    RET=""
                 fi
             else
                 echo "Could not find route to $1 on the host from inside container"
-                exit 1
+                RET=""
             fi
         else
             echo "Unknown container variable set"
-            exit 1
+            RET=""
         fi
     elif [ -x "$(command -v "$1")" ]; then
         RET="$1"
     else
         echo "Could not find $1 on the host"
-        exit 1
+        RET=""
     fi
 }

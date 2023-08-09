@@ -4,5 +4,11 @@
 
 function container_find_podman() {
     utils_find_exec_on_host podman
+
+    # No podman is fatal
+    if [ -z "$RET" ]; then
+        exit 1
+    fi
+
     PODMAN_EXEC="$RET"
 }

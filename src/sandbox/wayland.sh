@@ -5,12 +5,12 @@
 function sandbox_setup_wayland() {
     if [ -z "${WAYLAND_DISPLAY}" ]; then
         echo "No WAYLAND_DISPLAY set"
-        exit 1
+        return
     fi
 
     if [ ! -S "${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY}" ]; then
         echo "No ${XDG_RUNTIME_DIR}/${WAYLAND_DISPLAY} socket"
-        exit 1
+        return
     fi
 
     CONTAINER_RUN_ARGS+=(--env=WAYLAND_DISPLAY --volume="$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":"$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY":rw)
