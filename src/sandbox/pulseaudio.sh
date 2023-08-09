@@ -3,12 +3,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function sandbox_setup_pulseaudio() {
-    # Find pactl
-    utils_find_exec_on_host pactl
-    PACTL_EXEC="$RET"
+    if [ -S "${XDG_RUNTIME_DIR}/pulse/native" ]; then
+        PULSEAUDIO_HOST_SOCKET="${XDG_RUNTIME_DIR}/pulse/native"
+    else
+        # Find pactl
+        utils_find_exec_on_host pactl
+        PACTL_EXEC="$RET"
+        PULSEAUDIO_HOST_SOCKET=$(realpath "$($PACTL_EXEC info | awk -F ": " '$1 == "Server String" { print $2 }')")
+    fi
 
-    # Find the host socket
-    PULSEAUDIO_HOST_SOCKET=$(realpath "$($PACTL_EXEC info | awk -F ": " '$1 == "Server String" { print $2 }')")
     if [ ! -S "${PULSEAUDIO_HOST_SOCKET}" ]; then
         echo "No pulseaudio (${PULSEAUDIO_HOST_SOCKET}) socket"
         exit 1
