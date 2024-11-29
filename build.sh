@@ -46,6 +46,7 @@ PROJECT_FILES=(
     "src/sandbox/x11.sh"
     "src/sandbox/xdg.sh"
     "src/sandbox/main.sh"
+    "src/templates.sh"
     "src/main.sh"
 )
 

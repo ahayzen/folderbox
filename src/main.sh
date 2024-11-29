@@ -23,6 +23,9 @@ function main() {
         # Find sandbox escapes and setup run args
         sandbox_setup
 
+        # Copy any templates
+        templates_setup
+
         # Build and launch the container
         container_setup
     fi
