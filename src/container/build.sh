@@ -13,6 +13,12 @@ function container_setup_build() {
             CONTAINER_FILE=""
         fi
 
+        # Build the resultant Container file
+        if [ "$CONTAINER_FILE" != "" ]; then
+            # cpp will exit non zero due to non C++ style comments etc
+            cpp -E "$CONTAINER_FILE" > "$CONTAINER_FOLDER/Containerfile.result" || true
+        fi
+
         # Build the image
         BUILD_OUTPUT=$($PODMAN_EXEC build \
             --file="$CONTAINER_FILE" \
