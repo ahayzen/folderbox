@@ -10,6 +10,6 @@ function templates_setup() {
     if [ -d "$TEMPLATES_FOLDER" ]; then
         # Copy into the expected data folder
         mkdir -p "$DATA_FOLDER/common/"
-        cp -R "$TEMPLATES_FOLDER/." "$DATA_FOLDER/common/"
+        cp -f -R "$TEMPLATES_FOLDER/." "$DATA_FOLDER/common/"
     fi
 }
