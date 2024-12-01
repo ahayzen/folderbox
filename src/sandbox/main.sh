@@ -17,6 +17,8 @@ function sandbox_setup() {
     sandbox_setup_input
     printf "\r(%s) Finding KVM ... " "$TAG_NAME"
     sandbox_setup_kvm
+    printf "\r(%s) Finding Nix ..." "$TAG_NAME"
+    sandbox_setup_nix
     printf "\r(%s) Finding pipewire ... " "$TAG_NAME"
     sandbox_setup_pipewire
     printf "\r(%s) Finding pulseaudio ... " "$TAG_NAME"

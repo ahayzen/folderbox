@@ -34,6 +34,7 @@ PROJECT_FILES=(
     "src/sandbox/input.sh"
     "src/sandbox/kvm.sh"
     "src/sandbox/name.sh"
+    "src/sandbox/nix.sh"
     "src/sandbox/pipewire.sh"
     "src/sandbox/pulseaudio.sh"
     "src/sandbox/selinux.sh"
