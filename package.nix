@@ -4,7 +4,6 @@
 
 { stdenv
 , lib
-, fetchFromGitHub
 , bash
 , makeWrapper
 }:
