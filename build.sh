@@ -31,6 +31,7 @@ PROJECT_FILES=(
     "src/sandbox/git.sh"
     "src/sandbox/gpu.sh"
     "src/sandbox/group.sh"
+    "src/sandbox/helix.sh"
     "src/sandbox/input.sh"
     "src/sandbox/kvm.sh"
     "src/sandbox/name.sh"
