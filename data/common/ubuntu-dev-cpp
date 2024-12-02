@@ -7,12 +7,19 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install --yes \
         ccache \
+        clang \
         clang-format \
+        clangd \
         cmake \
+        gcovr \
         gdb \
         g++ \
+        lcov \
+        lldb \
+        llvm \
         ninja-build \
         pkg-config \
+        valgrind
     && echo 'export CMAKE_GENERATOR="Ninja"' > /etc/profile.d/90-cmake-ninja.sh \
     && echo 'export CMAKE_C_COMPILER_LAUNCHER="ccache"' > /etc/profile.d/90-cmake-c-ccache.sh \
     && echo 'export CMAKE_CXX_COMPILER_LAUNCHER="ccache"' > /etc/profile.d/90-cmake-cxx-ccache.sh
