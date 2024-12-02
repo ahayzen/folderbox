@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes \
+      wget \
+      xz-utils \
+    && wget https://github.com/helix-editor/helix/releases/download/24.07/helix-24.07-x86_64-linux.tar.xz \
+    && mkdir -p /usr/local/bin \
+    && tar -xf helix-24.07-x86_64-linux.tar.xz -C /usr/local/bin \
+    && rm helix-24.07-x86_64-linux.tar.xz \
+    && echo "export PATH=\"/usr/local/bin/helix-24.07-x86_64-linux:\$PATH\"" > /etc/profile.d/90-helix.sh
+
