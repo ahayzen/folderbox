@@ -52,5 +52,6 @@ function sandbox_setup() {
     printf "\r(%s) Finding Custom Args ... " "$TAG_NAME"
     sandbox_setup_custom
 
+    # Clear console
     printf "\r\033[0K"
 }

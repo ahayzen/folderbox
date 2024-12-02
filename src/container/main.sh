@@ -26,6 +26,9 @@ function container_setup() {
         printf "\r(%s) Creating container (first time may take a while) ... " "$TAG_NAME"
         container_setup_create
 
+        # Clear console
+        printf "\r\033[0K"
+
         # Start the container
         printf "\r(%s) Starting container ... " "$TAG_NAME"
         container_setup_start
