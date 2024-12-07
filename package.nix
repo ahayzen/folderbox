@@ -5,6 +5,7 @@
 { stdenv
 , lib
 , bash
+, gcc
 , makeWrapper
 }:
   stdenv.mkDerivation {
@@ -20,7 +21,7 @@
       mkdir -p $out/bin
       cp ./bin/folderbox $out/bin/folderbox
       wrapProgram $out/bin/folderbox \
-        --prefix PATH : ${lib.makeBinPath [ bash ]}
+        --prefix PATH : ${lib.makeBinPath [ bash gcc ]}
 
       mkdir -p $out/share/templates/
       cp ./data/common/* $out/share/templates/
