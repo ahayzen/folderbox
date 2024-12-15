@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# Note this assumes you have installed curl
+
+RUN curl -sS https://starship.rs/install.sh | sh -s -- --yes
+	&& echo '[[ $- == *i* ]] && eval "$(starship init bash)"' > /etc/profile.d/90-starship.sh
