@@ -41,6 +41,7 @@ PROJECT_FILES=(
     "src/sandbox/pulseaudio.sh"
     "src/sandbox/selinux.sh"
     "src/sandbox/ssh.sh"
+    "src/sandbox/starship.sh"
     "src/sandbox/term.sh"
     "src/sandbox/timezone.sh"
     "src/sandbox/usb.sh"
