@@ -2,13 +2,9 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-ENV DEBIAN_FRONTEND=noninteractive
+# Note this assumes you have installed tar, wget and xz-utils
 
-RUN apt-get update \
-    && apt-get install --yes \
-      wget \
-      xz-utils \
-    && wget https://github.com/helix-editor/helix/releases/download/24.07/helix-24.07-x86_64-linux.tar.xz \
+RUN wget https://github.com/helix-editor/helix/releases/download/24.07/helix-24.07-x86_64-linux.tar.xz \
     && mkdir -p /usr/local/bin \
     && tar -xf helix-24.07-x86_64-linux.tar.xz -C /usr/local/bin \
     && rm helix-24.07-x86_64-linux.tar.xz \
