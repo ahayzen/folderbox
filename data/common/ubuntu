@@ -21,8 +21,9 @@ RUN apt-get update \
         pipewire-bin \
     && locale-gen en_GB.UTF-8 \
     && yes | unminimize \
+    && mkdir -p /etc/sudoers.d \
     && echo "ALL ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nopasswd-sudo \
-    && userdel --force --remove ubuntu || true \
+    && (userdel --force --remove ubuntu || true) \
     && echo '[[ ! "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]] && export PATH="$HOME/.local/bin:$HOME/bin:$PATH"' > /etc/profile.d/90-path-local-bin.sh \
     && apt-get install --yes \
         cloc \
