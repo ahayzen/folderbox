@@ -20,6 +20,7 @@ RUN apt-get update \
     && apt-get install --yes --no-install-recommends \
         pipewire-bin \
     && locale-gen en_GB.UTF-8 \
+    && (apt-get install --yes unminimize || true) \
     && yes | unminimize \
     && mkdir -p /etc/sudoers.d \
     && echo "ALL ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nopasswd-sudo \
