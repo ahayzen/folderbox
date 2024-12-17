@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-RUN echo "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && rustup component add clippy rustfmt rust-src && . ~/.cargo/env" > /usr/local/bin/install_rust \
+RUN echo "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && rustup component add clippy rust-analyzer rustfmt rust-src && . ~/.cargo/env" > /usr/local/bin/install_rust \
     && chmod +x /usr/local/bin/install_rust \
     && echo '[[ ! "$PATH" =~ "$HOME/.cargo/bin:" ]] && export PATH="$HOME/.cargo/bin:$PATH"' > /etc/profile.d/90-path-cargo.sh
