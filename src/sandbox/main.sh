@@ -5,6 +5,8 @@
 function sandbox_setup() {
     printf "\r(%s) Finding ALSA ... " "$TAG_NAME"
     sandbox_setup_alsa
+    printf "\r(%s) Finding fuse ... " "$TAG_NAME"
+    sandbox_setup_fuse
     printf "\r(%s) Finding gdb ... " "$TAG_NAME"
     sandbox_setup_gdb
     printf "\r(%s) Finding git ... " "$TAG_NAME"

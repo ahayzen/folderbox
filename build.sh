@@ -27,6 +27,7 @@ PROJECT_FILES=(
     "src/folders/main.sh"
     "src/sandbox/alsa.sh"
     "src/sandbox/custom.sh"
+    "src/sandbox/fuse.sh"
     "src/sandbox/gdb.sh"
     "src/sandbox/git.sh"
     "src/sandbox/gpu.sh"
