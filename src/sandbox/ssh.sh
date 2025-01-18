@@ -3,6 +3,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function sandbox_setup_ssh() {
+    # Setup .ssh folder
+
+    # Ensure ssh folder exists on the host and mount it
+    mkdir -p "$HOME/.ssh"
+    CONTAINER_RUN_ARGS+=(--volume="$HOME/.ssh":"$HOME/.ssh":rw)
+
+    # Setup SSH_AUTH_SOCK
+
+    # Try to mount ssh auth sock if it is set
     if [ -z "${SSH_AUTH_SOCK}" ]; then
         echo "No SSH_AUTH_SOCK set"
         return
@@ -15,9 +24,5 @@ function sandbox_setup_ssh() {
         return
     fi
 
-    # Ensure ssh folder exists on the host
-    mkdir -p "$HOME/.ssh"
-
     CONTAINER_RUN_ARGS+=(--env=SSH_AUTH_SOCK="$SSH_AUTH_SOCK_PATH" --volume="$(dirname "$SSH_AUTH_SOCK_PATH")":"$(dirname "$SSH_AUTH_SOCK_PATH")":rw)
-    CONTAINER_RUN_ARGS+=(--volume="$HOME/.ssh":"$HOME/.ssh":rw)
 }
