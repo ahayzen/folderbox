@@ -37,6 +37,7 @@ PROJECT_FILES=(
     "src/sandbox/language.sh"
     "src/sandbox/name.sh"
     "src/sandbox/nix.sh"
+    "src/sandbox/ping.sh"
     "src/sandbox/pipewire.sh"
     "src/sandbox/pulseaudio.sh"
     "src/sandbox/selinux.sh"

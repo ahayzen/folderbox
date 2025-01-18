@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install --yes \
         bash-completion \
         curl \
+        iputils-ping \
         locales \
         man-db \
         nano \

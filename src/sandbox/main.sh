@@ -23,6 +23,8 @@ function sandbox_setup() {
     sandbox_setup_language
     printf "\r(%s) Finding Nix ..." "$TAG_NAME"
     sandbox_setup_nix
+    printf "\r(%s) Finding ping ... " "$TAG_NAME"
+    sandbox_setup_ping
     printf "\r(%s) Finding pipewire ... " "$TAG_NAME"
     sandbox_setup_pipewire
     printf "\r(%s) Finding pulseaudio ... " "$TAG_NAME"
