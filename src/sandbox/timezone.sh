@@ -3,5 +3,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 function sandbox_setup_timezone() {
-    CONTAINER_RUN_ARGS+=(--volume=/etc/localtime:/etc/localtime:ro)
+    if [ -e /etc/localtime ]; then
+        CONTAINER_RUN_ARGS+=(--volume=/etc/localtime:/etc/localtime:ro)
+    fi
 }
