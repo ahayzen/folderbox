@@ -123,12 +123,12 @@ Then in your Visual Studio Code settings set `podman-host` to the path.
 There are other projects that are similar to folderbox but with different goals,
 folderbox tries to keep your projects isolated while integrating with the host.
 
-| Project | Declarative | Sandbox | Custom Sandbox Control | Packaging System | Default Folder Access |
-|---------|-------------|---------|------------------------|------------------|---|
-| devbox | Yes | None | - | Nix | All |
-| distrobox | No | Weak | Minimal | OCI | Home |
-| folderbox | Yes | Partial | Raw | OCI | Directory |
-| x11docker | Yes | Strong | Yes | OCI | None |
+| Project | Sandbox | Custom Sandbox Control | Packaging System | Default Mapped Folders |
+|---------|---------|------------------------|------------------|---|
+| devbox |  None | - | Nix | All |
+| distrobox | <details><summary>Weak</summary>Home is mutated and root can be reached</details> | Minimal | OCI | <details><summary>Home</summary>Root is mounted in `/run/host`</details> |
+| folderbox | Partial | Raw | OCI | Directory |
+| x11docker | Strong | Yes | OCI | None |
 
   * [devbox](https://github.com/jetpack-io/devbox) - "Instant, easy, and predictable development environments"
     * Uses Nix packaging to provide packages but doesn't isolate file access from the host, whereas folderbox is isolated to project folders
