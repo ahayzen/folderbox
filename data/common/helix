@@ -4,9 +4,9 @@
 
 # Note this assumes you have installed tar, wget and xz-utils
 
-RUN wget https://github.com/helix-editor/helix/releases/download/24.07/helix-24.07-x86_64-linux.tar.xz \
+RUN wget https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION:-24.07}/helix-${HELIX_VERSION:-24.07}-x86_64-linux.tar.xz \
     && mkdir -p /usr/local/bin \
-    && tar -xf helix-24.07-x86_64-linux.tar.xz -C /usr/local/bin \
-    && rm helix-24.07-x86_64-linux.tar.xz \
-    && echo "export PATH=\"/usr/local/bin/helix-24.07-x86_64-linux:\$PATH\"" > /etc/profile.d/90-helix.sh
+    && tar -xf helix-${HELIX_VERSION:-24.07}-x86_64-linux.tar.xz -C /usr/local/bin \
+    && rm helix-${HELIX_VERSION:-24.07}-x86_64-linux.tar.xz \
+    && echo "export PATH=\"/usr/local/bin/helix-${HELIX_VERSION:-24.07}-x86_64-linux:\$PATH\"" > /etc/profile.d/90-helix-${HELIX_VERSION:-24.07}.sh
 
