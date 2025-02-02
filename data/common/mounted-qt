@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# Assumes that the following structure is used
+#
+# - QtVersion
+#   - QtArch  <- This is the QT_DIR
+#     - bin
+#     - lib
+# - Tools
+#   - CMake/bin
+#   - Ninja
+
+RUN touch /etc/profile.d/90-qt.sh \
+    && echo "export PATH=\"${QT_DIR}/../../Tools/CMake/bin:${QT_DIR}/../../Tools/Ninja:${QT_DIR}/bin:\$PATH\"" >> /etc/profile.d/90-qt.sh \
+    && echo "export LD_LIBRARY_PATH=\"${QT_DIR}/lib:\$LD_LIBRARY_PATH\"" >> /etc/profile.d/90-qt.sh
