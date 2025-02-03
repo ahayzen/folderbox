@@ -16,7 +16,7 @@ function container_setup_build() {
         # Build the resultant Container file
         if [ "$CONTAINER_FILE" != "" ]; then
             # cpp will exit non zero due to non C++ style comments etc
-            cpp -E "$CONTAINER_FOLDER/$CONTAINER_FILE" 2> /dev/null 1> "$CONTAINER_FOLDER/Containerfile.result" || true
+            cpp -fdirectives-only -E "$CONTAINER_FOLDER/$CONTAINER_FILE" 2> /dev/null 1> "$CONTAINER_FOLDER/Containerfile.result" || true
         fi
 
         # Build the image
