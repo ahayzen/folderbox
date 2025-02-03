@@ -6,7 +6,7 @@
 
 RUN wget https://github.com/starship/starship/releases/download/${STARSHIP_VERSION:-v1.21.1}/starship-x86_64-unknown-linux-gnu.tar.gz \
     && mkdir -p /usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}/ \
-    && tar -xf starship-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin/starshio-${STARSHIP_VERSION:-v1.21.1}/ \
+    && tar -xf starship-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}/ \
     && rm starship-x86_64-unknown-linux-gnu.tar.gz \
-    && echo "export PATH=\"/usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}:\$PATH\"" > /etc/profile.d/90-starship-${STARSHIP_VERSION:-v.1.21.1}.sh
-    && echo '[[ $- == *i* ]] && eval "$(starship init bash)"' > /etc/profile.d/99-starship-${STARSHIP_VERSION:-v1.21.1}.sh
+    && echo "export PATH=\"/usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}:\$PATH\"" > /etc/profile.d/90-starship-${STARSHIP_VERSION:-v.1.21.1}.sh \
+    && echo '[[ $- == *i* ]] && eval "$(starship init bash)"' >> /etc/profile.d/90-starship-${STARSHIP_VERSION:-v1.21.1}.sh
