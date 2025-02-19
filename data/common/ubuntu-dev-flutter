@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install --yes \
+        curl \
+        git \
+        unzip \
+        xz-utils \
+        zip \
+        libglu1-mesa \
+        clang \
+        cmake \
+        git \
+        ninja-build \
+        pkg-config \
+        libgtk-3-dev \
+        liblzma-dev \
+        libstdc++-12-dev
+
+RUN wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz \
+    && tar -xf flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz -C /opt/flutter-${FLUTTER_VERSION:-3.29.0}/ \
+    && rm flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz \
+    && echo "export PATH=\"/opt/flutter-${FLUTTER_VERSION:-3.29.0}/flutter/bin:\$PATH\"" > /etc/profile.d/90-flutter-${FLUTTER_VERSION:-3.29.0}.sh
