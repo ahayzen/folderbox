@@ -36,6 +36,7 @@ PROJECT_FILES=(
     "src/sandbox/input.sh"
     "src/sandbox/kvm.sh"
     "src/sandbox/language.sh"
+    "src/sandbox/log.sh"
     "src/sandbox/name.sh"
     "src/sandbox/nix.sh"
     "src/sandbox/ping.sh"
