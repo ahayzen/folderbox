@@ -23,6 +23,8 @@ function sandbox_setup() {
     sandbox_setup_kvm
     printf "\r(%s) Finding language ... " "$TAG_NAME"
     sandbox_setup_language
+    printf "\r(%s) Finding Log ..." "$TAG_NAME"
+    sandbox_setup_log
     printf "\r(%s) Finding Nix ..." "$TAG_NAME"
     sandbox_setup_nix
     printf "\r(%s) Finding ping ... " "$TAG_NAME"
