@@ -4,8 +4,8 @@
 
 # Note this assumes you have installed tar, wget and xz-utils
 
-RUN wget https://github.com/casey/just/releases/download/${JUST_VERSION:-1.38.0}/just-${JUST_VERSION:-1.38.0}-x86_64-unknown-linux-musl.tar.gz \
-    && mkdir -p /usr/local/bin/just-${JUST_VERSION:-1.38.0}/ \
-    && tar -xf just-${JUST_VERSION:-1.38.0}-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/just-${JUST_VERISON:-1.38.0}/ \
-    && rm just-${JUST_VERSION:-1.38.0}-x86_64-unknown-linux-musl.tar.gz \
-    && echo "export PATH=\"/usr/local/bin/just-${JUST_VERSION:-1.38.0}:\$PATH\"" > /etc/profile.d/90-just-${JUST_VERSION:-1.38.0}.sh
+RUN wget https://github.com/casey/just/releases/download/${JUST_VERSION:-1.42.4}/just-${JUST_VERSION:-1.42.4}-x86_64-unknown-linux-musl.tar.gz \
+    && mkdir -p /usr/local/bin/just-${JUST_VERSION:-1.42.4}/ \
+    && tar -xf just-${JUST_VERSION:-1.42.4}-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/just-${JUST_VERISON:-1.42.4}/ \
+    && rm just-${JUST_VERSION:-1.42.4}-x86_64-unknown-linux-musl.tar.gz \
+    && echo "export PATH=\"/usr/local/bin/just-${JUST_VERSION:-1.42.4}:\$PATH\"" > /etc/profile.d/90-just-${JUST_VERSION:-1.42.4}.sh

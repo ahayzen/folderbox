@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# Note this assumes you have installed curl
+# Note this assumes you have installed wget and tar
 
-RUN wget https://github.com/starship/starship/releases/download/${STARSHIP_VERSION:-v1.21.1}/starship-x86_64-unknown-linux-gnu.tar.gz \
-    && mkdir -p /usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}/ \
-    && tar -xf starship-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}/ \
-    && rm starship-x86_64-unknown-linux-gnu.tar.gz \
-    && echo "export PATH=\"/usr/local/bin/starship-${STARSHIP_VERSION:-v1.21.1}:\$PATH\"" > /etc/profile.d/90-starship-${STARSHIP_VERSION:-v.1.21.1}.sh \
-    && echo '[[ $- == *i* ]] && eval "$(starship init bash)"' >> /etc/profile.d/90-starship-${STARSHIP_VERSION:-v1.21.1}.sh
+RUN wget https://github.com/starship/starship/releases/download/${STARSHIP_VERSION:-v1.23.0}/starship-x86_64-unknown-linux-musl.tar.gz \
+    && mkdir -p /usr/local/bin/starship-${STARSHIP_VERSION:-v1.23.0}/ \
+    && tar -xf starship-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/starship-${STARSHIP_VERSION:-v1.23.0}/ \
+    && rm starship-x86_64-unknown-linux-musl.tar.gz \
+    && echo "export PATH=\"/usr/local/bin/starship-${STARSHIP_VERSION:-v1.23.0}:\$PATH\"" > /etc/profile.d/90-starship-${STARSHIP_VERSION:-v.1.23.0}.sh \
+    && echo '[[ $- == *i* ]] && eval "$(starship init bash)"' >> /etc/profile.d/90-starship-${STARSHIP_VERSION:-v1.23.0}.sh
