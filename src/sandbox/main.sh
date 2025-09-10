@@ -19,6 +19,8 @@ function sandbox_setup() {
     sandbox_setup_helix
     printf "\r(%s) Finding input ..." "$TAG_NAME"
     sandbox_setup_input
+    printf "\r(%s) Finding jujutsu ..." "$TAG_NAME"
+    sandbox_setup_jujutsu
     printf "\r(%s) Finding KVM ... " "$TAG_NAME"
     sandbox_setup_kvm
     printf "\r(%s) Finding language ... " "$TAG_NAME"

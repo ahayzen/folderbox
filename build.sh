@@ -34,6 +34,7 @@ PROJECT_FILES=(
     "src/sandbox/group.sh"
     "src/sandbox/helix.sh"
     "src/sandbox/input.sh"
+    "src/sandbox/jujutsu.sh"
     "src/sandbox/kvm.sh"
     "src/sandbox/language.sh"
     "src/sandbox/log.sh"
