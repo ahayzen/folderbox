@@ -21,7 +21,7 @@
       mkdir -p $out/bin
       cp ./bin/folderbox $out/bin/folderbox
       wrapProgram $out/bin/folderbox \
-        --prefix PATH : ${lib.makeBinPath [ bash gcc ]}
+        --prefix PATH : ${lib.makeBinPath [ bash gcc gettext ]}
 
       mkdir -p $out/share/templates/
       cp ./data/common/* $out/share/templates/

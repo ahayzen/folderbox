@@ -5,7 +5,12 @@
 function container_setup_build() {
     if [ -z "$( $PODMAN_EXEC images -q "$TAG_NAME" )" ]; then
         # Find the container definition
-        if [ -f "$CONTAINER_FOLDER/Containerfile.in" ]; then
+        if [ -f "$CONTAINER_FOLDER/Containerfile.in.in" ]; then
+            # Allow for custom FOLDERBOX_SNIPPETS_DIR argument to be resolved
+            FOLDERBOX_SNIPPETS_DIR="$DATA_FOLDER/common/" envsubst "\$FOLDERBOX_SNIPPETS_DIR" < "$CONTAINER_FOLDER/Containerfile.in.in" > "$CONTAINER_FOLDER/Containerfile.in"
+            
+            CONTAINER_FILE="Containerfile.in"
+        elif [ -f "$CONTAINER_FOLDER/Containerfile.in" ]; then
             CONTAINER_FILE="Containerfile.in"
         elif [ -f "$CONTAINER_FOLDER/Containerfile" ]; then
             CONTAINER_FILE="Containerfile"

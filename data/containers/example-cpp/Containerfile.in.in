@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-#include "../../common/ubuntu"
+#include "$FOLDERBOX_SNIPPETS_DIR/ubuntu"
 
-#include "../../common/ubuntu-dev-cpp"
+#include "$FOLDERBOX_SNIPPETS_DIR/ubuntu-dev-cpp"
 
 CMD ["/bin/bash", "--login"]
