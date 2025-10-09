@@ -22,6 +22,7 @@ RUN apt-get update \
         libstdc++-12-dev
 
 RUN wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz \
+    && mkdir -p /opt/flutter-${FLUTTER_VERSION:-3.29.0}/ \
     && tar -xf flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz -C /opt/flutter-${FLUTTER_VERSION:-3.29.0}/ \
     && rm flutter_linux_${FLUTTER_VERSION:-3.29.0}-stable.tar.xz \
     && echo "export PATH=\"/opt/flutter-${FLUTTER_VERSION:-3.29.0}/flutter/bin:\$PATH\"" > /etc/profile.d/90-flutter-${FLUTTER_VERSION:-3.29.0}.sh
