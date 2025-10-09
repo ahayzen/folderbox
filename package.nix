@@ -6,6 +6,7 @@
 , lib
 , bash
 , gcc
+, gettext
 , makeWrapper
 }:
   stdenv.mkDerivation {
