@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Adb and java
+RUN apt-get update \
+    && apt-get install -y \
+        adb \
+        openjdk-17-jre-headless
+
+# sdkmanager and androidsdk
+RUN wget https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip \
+    && unzip commandlinetools-linux-13114758_latest.zip -d /usr/local/bin/androidsdk/ \
+    && rm commandlinetools-linux-13114758_latest.zip \
+    && echo "export PATH=\"/usr/local/bin/androidsdk/cmdline-tools/bin/:\$PATH\"" > /etc/profile.d/90-sdkmanager.sh
+
+RUN yes | /usr/local/bin/androidsdk/cmdline-tools/bin/sdkmanager --licenses --sdk_root=/opt/androidsdk/ \
+    && /usr/local/bin/androidsdk/cmdline-tools/bin/sdkmanager --list --sdk_root=/opt/androidsdk/ \
+    && /usr/local/bin/androidsdk/cmdline-tools/bin/sdkmanager --sdk_root=/opt/androidsdk/ \
+        "cmdline-tools;latest" "platform-tools" ${ANDROID_SDK_INSTALL_PARTS:-"build-tools;35.0.0" "platforms;android-35" "ndk;27.3.13750724"} \
+    && keytool -keyalg RSA -genkeypair -alias androiddebugkey -keypass android -keystore /opt/debug.keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999 -deststoretype pkcs12 \
+    && echo "export ANDROID_HOME=/opt/androidsdk" > /etc/profile.d/99-android-home.sh
