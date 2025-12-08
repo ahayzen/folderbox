@@ -4,9 +4,9 @@
 
 # Note this assumes you have installed tar, wget and xz-utils
 
-RUN wget https://github.com/jj-vcs/jj/releases/download/${JUJUTSU_VERSION:-v0.34.0}/jj-${JUJUTSU_VERSION:-v0.34.0}-x86_64-unknown-linux-musl.tar.gz \
-    && mkdir -p /usr/local/bin/jj-${JUJUTSU_VERSION:-v0.34.0}/ \
-    && tar -xf jj-${JUJUTSU_VERSION:-v0.34.0}-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/jj-${JUJUTSU_VERSION:-v0.34.0}/ \
-    && rm jj-${JUJUTSU_VERSION:-v0.34.0}-x86_64-unknown-linux-musl.tar.gz \
-    && echo "export PATH=\"/usr/local/bin/jj-${JUJUTSU_VERSION:-v0.34.0}:\$PATH\"" > /etc/profile.d/90-jj-${JUJUTSU_VERSION:-v0.34.0}.sh \
-    && echo "source <(COMPLETE=bash jj)" >> /etc/profile.d/90-jj-${JUJUTSU_VERSION:-v0.34.0}.sh
+RUN wget https://github.com/jj-vcs/jj/releases/download/${JUJUTSU_VERSION:-v0.36.0}/jj-${JUJUTSU_VERSION:-v0.36.0}-x86_64-unknown-linux-musl.tar.gz \
+    && mkdir -p /usr/local/bin/jj-${JUJUTSU_VERSION:-v0.36.0}/ \
+    && tar -xf jj-${JUJUTSU_VERSION:-v0.36.0}-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/jj-${JUJUTSU_VERSION:-v0.36.0}/ \
+    && rm jj-${JUJUTSU_VERSION:-v0.36.0}-x86_64-unknown-linux-musl.tar.gz \
+    && echo "export PATH=\"/usr/local/bin/jj-${JUJUTSU_VERSION:-v0.36.0}:\$PATH\"" > /etc/profile.d/90-jj-${JUJUTSU_VERSION:-v0.36.0}.sh \
+    && echo "source <(COMPLETE=bash jj)" >> /etc/profile.d/90-jj-${JUJUTSU_VERSION:-v0.36.0}.sh
