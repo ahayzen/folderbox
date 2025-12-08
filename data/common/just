@@ -8,4 +8,5 @@ RUN wget https://github.com/casey/just/releases/download/${JUST_VERSION:-1.44.0}
     && mkdir -p /usr/local/bin/just-${JUST_VERSION:-1.44.0}/ \
     && tar -xf just-${JUST_VERSION:-1.44.0}-x86_64-unknown-linux-musl.tar.gz -C /usr/local/bin/just-${JUST_VERSION:-1.44.0}/ \
     && rm just-${JUST_VERSION:-1.44.0}-x86_64-unknown-linux-musl.tar.gz \
-    && echo "export PATH=\"/usr/local/bin/just-${JUST_VERSION:-1.44.0}:\$PATH\"" > /etc/profile.d/90-just-${JUST_VERSION:-1.44.0}.sh
+    && echo "export PATH=\"/usr/local/bin/just-${JUST_VERSION:-1.44.0}:\$PATH\"" > /etc/profile.d/90-just-${JUST_VERSION:-1.44.0}.sh \
+    && echo '[[ $- == *i* ]] && eval "$(just --completions bash)"' >> /etc/profile.d/90-just-${JUST_VERSION:-1.44.0}.sh
