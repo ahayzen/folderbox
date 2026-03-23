@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# Note this assumes you have installed tar, wget and xz-utils
+
+RUN wget https://github.com/anomalyco/opencode/releases/download/${OPENCODE_VERSION:-v1.3.0}/opencode-linux-x64.tar.gz \
+    && mkdir -p /usr/local/bin/opencode-${OPENCODE_VERSION:-v1.3.0} \
+    && tar -xf opencode-linux-x64.tar.gz -C /usr/local/bin/opencode-${OPENCODE_VERSION:-v1.3.0}/ \
+    && rm opencode-linux-x64.tar.gz \
+    && echo "export PATH=\"/usr/local/bin/opencode-${OPENCODE_VERSION:-v1.3.0}:\$PATH\"" > /etc/profile.d/90-opencode-${OPENCODE_VERSION:-v1.3.0}.sh
+
