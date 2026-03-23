@@ -40,6 +40,7 @@ PROJECT_FILES=(
     "src/sandbox/log.sh"
     "src/sandbox/name.sh"
     "src/sandbox/nix.sh"
+    "src/sandbox/opencode.sh"
     "src/sandbox/ping.sh"
     "src/sandbox/pipewire.sh"
     "src/sandbox/pulseaudio.sh"
