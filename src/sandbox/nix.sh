@@ -27,11 +27,9 @@ function sandbox_setup_nix() {
 
       # Inject script that allows for calling Nix
       mkdir -p "$PERSIST_FOLDER/home/.local/bin"
-      tee "$PERSIST_FOLDER/home/.local/bin/host-nix" <<EOF
-#!/usr/bin/env bash
-export PATH="\$HOME/.nix-profile/bin:/nix/profile/bin:\$HOME/.local/state/nix/profile/bin:/run/current-system/etc/profiles/per-user/\$USER/bin:/nix/var/nix/profiles/default/bin:/run/current-system-sw/bin:\$PATH"
-exec "\$@"
-EOF
-      chmod +x "$PERSIST_FOLDER/home/local/bin/host-nix"
+      echo "#!/usr/bin/env bash
+export PATH=\"\$HOME/.nix-profile/bin:/nix/profile/bin:\$HOME/.local/state/nix/profile/bin:/run/current-system/etc/profiles/per-user/\$USER/bin:/nix/var/nix/profiles/default/bin:/run/current-system-sw/bin:\$PATH\"
+exec \"\$@\"" > "$PERSIST_FOLDER/home/.local/bin/host-nix"
+      chmod +x "$PERSIST_FOLDER/home/.local/bin/host-nix"
     fi
 }
