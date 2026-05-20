@@ -17,6 +17,10 @@ function sandbox_setup_nix() {
 
       # If there is a ~/.local/state/nix then mount it into the container
       if [ -d "$HOME/.local/state/nix" ]; then
+        # Ensure parent of mounted state folder exists
+        # otherwise .local/state is root in the container
+        mkdir -p "$PERSIST_FOLDER/home/.local/state"
+
         CONTAINER_RUN_ARGS+=(--volume="$HOME/.local/state/nix":"$HOME/.local/state/nix":ro)
       fi
 
