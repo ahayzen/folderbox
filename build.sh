@@ -39,6 +39,7 @@ PROJECT_FILES=(
     "src/sandbox/language.sh"
     "src/sandbox/log.sh"
     "src/sandbox/name.sh"
+    "src/sandbox/network.sh"
     "src/sandbox/nix.sh"
     "src/sandbox/opencode.sh"
     "src/sandbox/ping.sh"

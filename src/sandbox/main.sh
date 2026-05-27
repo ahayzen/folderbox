@@ -27,10 +27,12 @@ function sandbox_setup() {
     sandbox_setup_language
     printf "\r(%s) Finding Log ..." "$TAG_NAME"
     sandbox_setup_log
-    printf "\r(%s) Finding Opencode ..." "$TAG_NAME"
-    sandbox_setup_opencode
+    printf "\r(%s) Finding Network..." "$TAG_NAME"
+    sandbox_setup_network
     printf "\r(%s) Finding Nix ..." "$TAG_NAME"
     sandbox_setup_nix
+    printf "\r(%s) Finding Opencode ..." "$TAG_NAME"
+    sandbox_setup_opencode
     printf "\r(%s) Finding ping ... " "$TAG_NAME"
     sandbox_setup_ping
     printf "\r(%s) Finding pipewire ... " "$TAG_NAME"
