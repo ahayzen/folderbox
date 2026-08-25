@@ -10,6 +10,16 @@ function sandbox_setup_jujutsu() {
         mkdir -p "$PERSIST_FOLDER/home/.config/"
 
         CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj":"$HOME/.config/jj":ro)
+
+        # Ensure parent of mounted jujutsu writable folders exist
+        # otherwise .config is root in the container
+        mkdir -p "$PERSIST_FOLDER/home/.config/jj/"
+
+        # Repo and workspace folders need to be writable
+        mkdir -p "$HOME/.config/jj/repo/"
+        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/repo":"$HOME/.config/jj/repo":rw)
+        mkdir -p "$HOME/.config/jj/workspace/"
+        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/workspace":"$HOME/.config/jj/workspace":rw)
     fi
 }
 
