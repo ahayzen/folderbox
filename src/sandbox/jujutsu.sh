@@ -16,10 +16,10 @@ function sandbox_setup_jujutsu() {
         mkdir -p "$PERSIST_FOLDER/home/.config/jj/"
 
         # Repo and workspace folders need to be writable
-        mkdir -p "$HOME/.config/jj/repo/"
-        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/repo":"$HOME/.config/jj/repo":rw)
-        mkdir -p "$HOME/.config/jj/workspace/"
-        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/workspace":"$HOME/.config/jj/workspace":rw)
+        mkdir -p "$HOME/.config/jj/repos/"
+        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/repos":"$HOME/.config/jj/repos":rw)
+        mkdir -p "$HOME/.config/jj/workspaces/"
+        CONTAINER_RUN_ARGS+=(--volume="$HOME/.config/jj/workspaces":"$HOME/.config/jj/workspaces":rw)
     fi
 }
 
