@@ -10,6 +10,7 @@ RUN apt-get update \
         curl \
         libfuse2 \
         iputils-ping \
+        less \
         locales \
         man-db \
         nano \
@@ -24,7 +25,7 @@ RUN apt-get update \
         pipewire-bin \
     && locale-gen en_GB.UTF-8 \
     && (apt-get install --yes unminimize || true) \
-    && yes | unminimize \
+    && (yes | unminimize || true) \
     && mkdir -p /etc/sudoers.d \
     && echo "ALL ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/nopasswd-sudo \
     && (userdel --force --remove ubuntu || true) \
